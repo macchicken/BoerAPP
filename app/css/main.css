@@ -82,20 +82,20 @@ p {
   text-transform: none;  
 }
 
-#photoContent, #settings {
+#photoContent, #settings, #searchContent {
   text-align: center;
 }
 
-#photoContent .title, #settings {
+#photoContent .title, #settings, #searchContent {
   font-size: 1.2em;
   margin-top: 1em;
 }
 
-#photoContent div {
+#photoContent div, #searchContent div {
   margin-bottom: 1em;
 }
 
-#photoContent label, #settings label {
+#photoContent label, #settings label, #searchContent label {
   font-size: 1.9em;
   padding-right: 0.2em;
   vertical-align: bottom;

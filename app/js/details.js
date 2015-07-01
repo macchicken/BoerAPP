@@ -30,10 +30,9 @@
 			currentPhoto=null;
         },
         openLink: function () {
-            // Will use the Cordova InAppBrowser plugin when deployed to a device. Opens a new window in
-            // the simulator
-            var or_sq=transferImgUrl(currentPhoto.url_sq);
-            window.open(or_sq, '_blank', 'location=yes');
+            // Will use the Cordova InAppBrowser plugin when deployed to a device. Opens a new window in the simulator
+            var fkpage="https://www.flickr.com/photos/"+currentPhoto.owner+"/"+currentPhoto.id+"/";
+            window.open(fkpage, '_blank', 'location=yes');
         }
     };
 }());

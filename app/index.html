@@ -16,7 +16,7 @@
 
 <body>
     <div data-role="view" id="index" data-title="Photos">
-        <ul data-role="listview" data-source="Photos.data" data-template="photos-template"></ul>
+        <ul data-role="listview" data-source="Photos.data" data-pull-to-refresh="true" data-template="photos-template"></ul>
     </div>
     <script type="text/x-kendo-template" id="photos-template">
         <a href="views/details.html?##id=#: id #">
@@ -31,7 +31,7 @@
         <div data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
-                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
+                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="action"></a>
                 <a data-click="Photos.settings" data-role="button" data-align="right" data-icon="settings"></a>
             </div>
         </div>
@@ -48,6 +48,8 @@
             <li><a href="views/favorites.html" data-icon="favorites">Favorites</a>
             </li>
             <li><a href="views/about.html" data-icon="globe">About</a>
+            </li>
+            <li><a href="views/search.html" data-icon="search">Search</a>
             </li>
         </ul>
     </div>
