@@ -1,6 +1,7 @@
-<div data-role="view" data-title="Book Details" data-show="BookDetail.show" data-hide="BookDetail.hide" data-layout="back-layout" data-reload="true" data-transition="fade">
-    <div id="bookContent">
+<div data-role="view" data-title="Photo Details" data-show="PhotoDetail.show" data-hide="PhotoDetail.hide" data-layout="back-layout" data-reload="true" data-transition="fade">
+    <div id="photoContent">
         <div class="title" data-bind="text: title"></div>
+        <div class="title" data-bind="text: descriptions"></div>
         <div class="bigImage">
             <img data-bind="attr: { src: image_url }" />
         </div>
@@ -9,7 +10,7 @@
             <input id="favorite" type="checkbox" data-role="switch" data-checked=false />
         </div>
         <div>
-            <p><a data-role="button" id="amazonLink" data-click="BookDetail.openLink">Order from Amazon</a>
+            <p><a data-role="button" id="amazonLink" data-click="PhotoDetail.openLink">Order from Flickr</a>
             </p>
         </div>
     </div>

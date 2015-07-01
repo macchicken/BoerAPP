@@ -1,10 +1,10 @@
 (function () {
 	window.Favorites = {
 		show: function() {
-			window.Books.data.filter({ field: "is_favorite", operator: "eq", value: true });
+			window.Photos.data.filter({ field: "views", operator: "gte", value: 1 });
 		},
 		hide: function() {
-			window.Books.data.filter([]);
+			window.Photos.data.filter([]);
 		}
 	};
 }());

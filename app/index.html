@@ -15,15 +15,15 @@
 </head>
 
 <body>
-    <div data-role="view" id="index" data-title="Books">
-        <ul data-role="listview" data-source="Books.data" data-template="books-template"></ul>
+    <div data-role="view" id="index" data-title="Photos">
+        <ul data-role="listview" data-source="Photos.data" data-template="photos-template"></ul>
     </div>
-    <script type="text/x-kendo-template" id="books-template">
-        <a href="views/details.html?##id=#: isbn #">
-            <div class="bookImage"><img src="#: image_url #" />
+    <script type="text/x-kendo-template" id="photos-template">
+        <a href="views/details.html?##id=#: id #">
+            <div class="photoImage"><img src="#: url_sq #" />
             </div>
-            <div class="bookTitle">#: name #</div>
-            <div class="bookAuthor">#: author #</div>
+            <div class="photoTitle">#: title #</div>
+            <div class="photoAuthor">#: ownername #</div>
         </a>
     </script>
     <!-- Add Tutorial Markup Here -->
@@ -32,7 +32,7 @@
             <div data-role="navbar">
                 <span data-role="view-title"></span>
                 <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
-                <a data-click="Books.settings" data-role="button" data-align="right" data-icon="settings"></a>
+                <a data-click="Photos.settings" data-role="button" data-align="right" data-icon="settings"></a>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
     <div data-role="layout" data-id="back-layout">
         <div data-role="header">
             <div data-role="navbar">
-                <a data-click="Books.back" data-role="button" data-align="left" data-icon="rewind">Back</a>
+                <a data-click="Photos.back" data-role="button" data-align="left" data-icon="rewind">Back</a>
                 <span data-role="view-title"></span>
             </div>
         </div>

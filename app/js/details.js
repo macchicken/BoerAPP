@@ -1,40 +1,39 @@
 (function () {
-    var currentBook;
-    window.BookDetail = {
+    var currentPhoto;
+
+    function transferImgUrl(imgurl) {
+        var lasti = imgurl.lastIndexOf(".");
+        var length = imgurl.length;
+        return imgurl.substring(0, lasti - 2) + imgurl.substring(lasti, length);
+    }
+
+    window.PhotoDetail = {
         show: function () {
-            //Pull the ISBN number from the query string
+            //Pull the id number from the query string
             var location = window.location.toString();
-            var isbn = location.substring(location.lastIndexOf('?') + 4);
-
-            // Filter the DataSource bt ISBN to get the selected record
-            window.Books.data.filter({
-                field: "isbn",
-                operator: "eq",
-                value: isbn
-            });
-            currentBook = window.Books.data.view()[0];
-
+            var idstr = location.substring(location.lastIndexOf('?') + 4);
+           
+			currentPhoto=window.Photos.data.get(idstr);
             // Create a model for the page and bind it to the view
-            var book = {
-                title: currentBook.name + " by " + currentBook.author,
-                image_url: currentBook.image_url,
-                amazon_url: currentBook.amazon_url,
-                is_favorite: currentBook.is_favorite
+            var photo = {
+                title: currentPhoto.title + " by " + currentPhoto.ownername,
+                image_url: transferImgUrl(currentPhoto.url_sq),
+                descriptions: currentPhoto.tags
             };
-            kendo.bind($('#bookContent'), book, kendo.mobile.ui);
-            // If the current book is a favorited item, toggle the switch on the view
-            if (currentBook.is_favorite) {
+            kendo.bind($('#photoContent'), photo, kendo.mobile.ui);
+            // If the current photo views is bigger than zero,toggle the switch on the view
+            if (currentPhoto.views * 1 >= 1) {
                 $('#favorite').data('kendoMobileSwitch').toggle();
             }
         },
         hide: function () {
-            // When the user navigates away from the page, remove the filter
-            window.Books.data.filter([]);
+			currentPhoto=null;
         },
         openLink: function () {
             // Will use the Cordova InAppBrowser plugin when deployed to a device. Opens a new window in
             // the simulator
-            window.open(currentBook.amazon_url, '_blank', 'location=yes');
+            var or_sq=transferImgUrl(currentPhoto.url_sq);
+            window.open(or_sq, '_blank', 'location=yes');
         }
     };
 }());
