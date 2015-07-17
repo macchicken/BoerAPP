@@ -81,13 +81,13 @@
             }
         }),
         show: function() {
-			if (this.data!=null&&this.data!=undefined){
-                this.data.filter({ field: "favorited", operator: "eq", value: false });
+			if (window.MyFavorites.data!=undefined){
+                window.MyFavorites.data.filter({ field: "favorited", operator: "eq", value: true });
             }
 		},
 		hide: function() {
-			if (this.data!=null&&this.data!=undefined){
-            	this.data.filter([]);
+			if (window.MyFavorites.data!=undefined){
+            	window.MyFavorites.data.filter([]);
             }
 		},
         add: function (photo,favorited) {
