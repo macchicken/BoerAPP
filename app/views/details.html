@@ -7,11 +7,16 @@
         </div>
         <div>
             <label for="favorite">Favorite?</label>
-            <input id="favorite" type="checkbox" data-role="switch" data-checked=false />
+            <input id="favorite" type="checkbox" data-role="switch" data-change="onChange"/>
         </div>
         <div>
-            <p><a data-role="button" data-click="PhotoDetail.openLink">Flickr page</a>
-            </p>
+            <p><a data-role="button" data-click="PhotoDetail.openLink">Page in Flickr</a></p>
         </div>
     </div>
 </div>
+<script>
+function onChange(e) {
+  var p=window.PhotoDetail.cphoto();
+  window.MyFavorites.add(p,e.checked);
+}
+</script>
