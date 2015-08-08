@@ -80,20 +80,24 @@
                 }
             }
         }),
-        show: function() {
-			if (window.MyFavorites.data!=undefined){
-                window.MyFavorites.data.filter({ field: "favorited", operator: "eq", value: true });
+        show: function () {
+            if (window.MyFavorites.data != undefined) {
+                window.MyFavorites.data.filter({
+                    field: "favorited",
+                    operator: "eq",
+                    value: true
+                });
             }
-		},
-		hide: function() {
-			if (window.MyFavorites.data!=undefined){
-            	window.MyFavorites.data.filter([]);
+        },
+        hide: function () {
+            if (window.MyFavorites.data != undefined) {
+                window.MyFavorites.data.filter([]);
             }
-		},
-        add: function (photo,favorited) {
+        },
+        add: function (photo, favorited) {
             var tm = this.data.get(photo.id);
-            console.log(photo.id+" favorited add "+favorited);
-            if (tm == null||tm == undefined) {
+            console.log(photo.id + " favorited add " + favorited);
+            if (tm == null || tm == undefined) {
                 this.data.add({
                     id: photo.id,
                     owner: photo.owner,
@@ -106,13 +110,63 @@
                     width_sq: photo.width_sq,
                     favorited: favorited
                 });
-            }else{
-                tm.set("favorited",favorited);
+            } else {
+                tm.set("favorited", favorited);
             }
             this.data.sync();
         }
     };
+
+    function idel(element) {
+    	return document.getElementById(element);
+	};
+    function cameraApp() {};
+    cameraApp.prototype = {
+        pictureSource: null,
+
+        destinationType: null,
+
+        run: function () {
+            var that = this;
+            that.pictureSource = navigator.camera.PictureSourceType;
+            that.destinationType = navigator.camera.DestinationType;
+            idel("capturePhotoButton").addEventListener("click", function () {
+                that.capturePhoto.apply(that, arguments);
+            });
+        },
+
+        capturePhoto: function () {
+            console.log("-capturePhoto");
+            var that = this;
+			navigator.camera.Direction=1;//front camera
+            // Take picture using device camera and retrieve image as base64-encoded string.
+            navigator.camera.getPicture(function () {
+                that.onPhotoDataSuccess.apply(that, arguments);
+            }, function () {
+                that.onFail.apply(that, arguments);
+            }, {
+                quality: 50,
+                destinationType: that.destinationType.DATA_URL,
+                saveToPhotoAlbum: true
+            });
+        },
+
+        onPhotoDataSuccess: function (imageData) {
+            var smallImage = document.getElementById('smallImage');
+            smallImage.style.display = 'block';
+            // Show the captured photo.
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+            console.log(smallImage.src);
+        },
+
+        onFail: function (message) {
+            console.log("error "+message);
+        }
+    };
+
     document.addEventListener("deviceready", function () {
+        cameraApp = new cameraApp();
+        cameraApp.run();
         navigator.splashscreen.hide();
         app = new kendo.mobile.Application(document.body, {
             layout: "main-layout"

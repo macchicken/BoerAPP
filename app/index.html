@@ -18,6 +18,18 @@
     <div data-role="view" id="index" data-title="Photos">
         <ul data-role="listview" data-source="Photos.data" data-pull-to-refresh="true" data-template="photos-template"></ul>
     </div>
+    <div data-role="view" id="mood" data-title="Take your mood" >
+        <div>
+            <div align="center">
+                <button id="capturePhotoButton">
+                    Take your mood
+                </button>
+            </div>
+        </div>
+        <div align="center">
+           <img style="display:none;margin:5px auto; width:600px; height:800px;" id="smallImage" src="" />
+        </div>
+	</div>
     <script type="text/x-kendo-template" id="photos-template">
         <a href="views/details.html?##id=#: id #">
             <div class="photoImage"><img src="#: url_sq #" />
@@ -49,9 +61,11 @@
             </li>
             <li><a href="views/myfavorites.html" data-icon="favorites">My favorites</a>
             </li>
-            <li><a href="views/about.html" data-icon="globe">About</a>
-            </li>
             <li><a href="views/search.html" data-icon="search">Search</a>
+            </li>
+            <li><a href="#mood" data-icon="camera">Mood</a>
+            </li>
+            <li><a href="views/about.html" data-icon="globe">About</a>
             </li>
         </ul>
     </div>
