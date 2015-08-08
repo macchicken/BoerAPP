@@ -5,6 +5,15 @@
         searched = false;
     var fields = "tags,url_sq,owner_name,views";
     var patt1 = new RegExp("\\w+");
+	var aboutOptions = {
+          "direction" : "left",
+          "duration"  : 500,
+          "iosdelay"     : 0,
+          "androiddelay" : 0,
+          "winphonedelay": 0,
+          "href" : "views/about.html"
+     };
+    
     window.Photos = {
         data: new kendo.data.DataSource({
             transport: {
@@ -157,10 +166,21 @@
             // Show the captured photo.
             smallImage.src = "data:image/jpeg;base64," + imageData;
             console.log(smallImage.src);
+            navigator.notification.vibrate(3000);
         },
 
         onFail: function (message) {
             console.log("error "+message);
+        }
+    };
+
+    window.AppFlip={
+        flip: function(){
+            window.plugins.nativepagetransitions.flip(
+              aboutOptions,
+              function (msg) {console.log("SUCCESS: " + JSON.stringify(msg))},
+              function (msg) {alert("ERROR: "   + JSON.stringify(msg))}
+            );
         }
     };
 
