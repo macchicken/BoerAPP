@@ -2,10 +2,10 @@
   "ProjectName": "Blank",
   "ProjectGuid": "ee954a09-710f-4597-be53-e523a37106b6",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.FlickrClient",
-  "DisplayName": "Flickr Client",
+  "AppIdentifier": "com.telerik.Boer",
+  "DisplayName": "Boer Emotion",
   "Author": "Barry Chen",
-  "Description": "Flickr Mobile Client App",
+  "Description": "Boer Emotion App",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
@@ -22,6 +22,7 @@
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
   "FrameworkVersion": "3.7.0",
   "CorePlugins": [
+    "com.phonegap.plugins.sqlite@1.0.6",
     "com.telerik.plugins.nativepagetransitions@0.4.1",
     "org.apache.cordova.battery-status",
     "org.apache.cordova.camera",

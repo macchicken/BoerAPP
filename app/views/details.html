@@ -1,22 +1,17 @@
-<div data-role="view" data-title="Photo Details" data-show="PhotoDetail.show" data-hide="PhotoDetail.hide" data-layout="back-layout" data-reload="true" data-transition="fade">
-    <div id="photoContent">
-        <div class="title" data-bind="text: title"></div>
-        <div class="title" data-bind="text: descriptions"></div>
-        <div class="bigImage">
+<div data-role="view" data-title="Diary Details" data-show="DiaryDetail.show" data-hide="DiaryDetail.hide" data-layout="back-layout" data-reload="true" data-transition="fade">
+    <div id="diaryContent">
+        <div align="center" class="title" data-bind="text: name"></div>
+<!--         <div align="center" class="title" data-bind="text: author"></div> -->
+        <div align="center" class="title">
+        	<textarea id="dianotes" style="background-color: rgb(178, 178, 178)" rows=10 cols=30 data-bind="text: author"></textarea>    
+        </div>
+        <div align="center" class="bigImage">
             <img data-bind="attr: { src: image_url }" />
         </div>
-        <div>
-            <label for="favorite">Favorite?</label>
-            <input id="favorite" type="checkbox" data-role="switch" data-change="onChange"/>
-        </div>
-        <div>
-            <p><a data-role="button" data-click="PhotoDetail.openLink">Page in Flickr</a></p>
+        <div class="title">
+            <button>
+                <button type="button" class="btn btn-info btn-lg" onclick="DiaryDetail.save()">Save</button>
+            </button>
         </div>
     </div>
 </div>
-<script>
-function onChange(e) {
-  var p=window.PhotoDetail.cphoto();
-  window.MyFavorites.add(p,e.checked);
-}
-</script>
