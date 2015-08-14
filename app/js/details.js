@@ -14,6 +14,7 @@
            
 			currentDiary=window.Diaries.queryDiary(idstr*1);
             // Create a model for the page and bind it to the view
+            console.log(' DiaryDetail');
             console.log(currentDiary);
             var diary = {
                 // title: currentDiary.name + " by " + currentDiary.author,
