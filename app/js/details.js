@@ -11,7 +11,7 @@
             //Pull the id number from the query string
             var location = window.location.toString();
             var idstr = location.substring(location.lastIndexOf('?') + 4);
-           
+           console.log(idstr);
 			currentDiary=window.Diaries.queryDiary(idstr*1);
             // Create a model for the page and bind it to the view
             console.log(' DiaryDetail');

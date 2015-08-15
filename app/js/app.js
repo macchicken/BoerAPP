@@ -29,46 +29,20 @@
         return dtime.getFullYear().toString() +'-'+ (dtime.getMonth() + 1).toString() +'-'+ dtime.getDate().toString() +'-'+ dtime.getHours().toString() +'-'+ dtime.getMinutes().toString()+'-'+dtime.getDay();
     }
 
-    function makeChange(ele) {
-        if (timer)
-            clearTimeout(timer);
-
-        if (istrue) {
-            // var r = confirm("delete this diary?");
-            // if (r == true) {
-            //     var delid=ele.firstChild.value*1;
-            //     console.log('delid '+delid);
-            //     deleteTodo(delid);
-            // }
+    window.BoaerTools = {
+        atagpress: function (element) {
+            console.log(" atagpress delete "+element.firstChild.value);
             navigator.notification.confirm(
-        		'delete this diary?',  // message
-        			function(buttonIndex){// callback to invoke with index of button pressed
+            'delete this diary?',  // message
+            function(buttonIndex){// callback to invoke with index of button pressed
                         if (buttonIndex==1){
-                            var delid=ele.firstChild.value*1;console.log('delid '+delid);
+                            var delid=element.firstChild.value*1;console.log('delid '+delid);
                             deleteTodo(delid);
                         }
                     },                
-        			null,            // title
-        			['OK','Cancel']          // buttonLabels
-    			);
-        }
-    }
-
-    window.BoaerTools = {
-        longpress: function (event,element) {
-            event.preventDefault();
-            istrue = true;
-            timer = setTimeout(function () {
-                makeChange(element);
-            }, delay);
-        },
-
-        revert: function (event,element) {
-            console.log('revert '+istrue);
-            event.preventDefault();
-            var id=element.firstChild.value;
-            app.navigate("views/details.html?id="+id);
-            istrue = false;
+            null,            // title
+            ['OK','Cancel']          // buttonLabels
+            );
         }
     };
 
@@ -94,7 +68,7 @@
         var diariesrow = function (row) {
             console.log(row);
             var temp=row.CREATEDTIME.split('-');
-            return "<li><a class='km-listview-link' data-role='listview-link' onmousedown='BoaerTools.longpress(event,this)' onmouseup='BoaerTools.revert(event,this)'><input hidden type='text' value='"+row.ID+"'/><table border='0'><tr><th>" + temp[0]+"/"+temp[1]+"/"+temp[2]+"&nbsp"+temp[3] + "H&nbsp&nbsp&nbsp"+transferDayToEnglish(temp[5]*1)+" </th><th><img src='" + row.FACE_URL + "' height='42' width='42'></th></tr><tr><td>" + row.TITLE + "</td></tr></table></a></li>";
+            return "<li><table border='0'><tr><th><a href='views/details.html?id="+row.ID+"' class='km-listview-link' data-role='listview-link'>" + temp[0]+"/"+temp[1]+"/"+temp[2]+"&nbsp"+temp[3] + "H&nbsp&nbsp&nbsp"+transferDayToEnglish(temp[5]*1)+"</a></th><th><a class='km-listview-link' data-role='listview-link' onmousedown='BoaerTools.atagpress(this)'><input hidden type='text' value='"+row.ID+"'/><img src='" + row.FACE_URL + "' height='42' width='42'></a></th></tr><tr><td>" + row.TITLE + "</td></tr></table></li>";
         }
 
         var render = function (tx, rs) {
@@ -357,7 +331,11 @@
             // });
             isbno = isbno + 1;
             var tdiatime = (today.getMonth() + 1).toString() + today.getFullYear().toString();
-            addTodo(isbno, today.getDate() + ' ' + transferToEnglish(today.getMonth()) + ' ' + today.getFullYear() + " with " + todayWeather.description, idel("diaryNotes").value, moodImage.src, tdiatime);
+            var faceurl=moodImage.src;
+            if (faceurl===""){
+                faceurl="img/minions/pic-1.jpg";
+            }
+            addTodo(isbno, today.getDate() + ' ' + transferToEnglish(today.getMonth()) + ' ' + today.getFullYear() + " with " + todayWeather.description, idel("diaryNotes").value, faceurl, tdiatime);
             console.log("diary saved");
             idel("diaryNotes").value = '';
             moodImage.style.display = 'none';
