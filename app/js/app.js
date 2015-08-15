@@ -6,7 +6,6 @@
         searched = false;
     var fields = "tags,url_sq,owner_name,views";
     var patt1 = new RegExp("\\w+");
-    var searchMonth, searchYear;
     var slibOptions = {
         "direction": "left", // 'left|right|up|down', default 'right' (Android currently only supports left and right)
         "duration": 600, // in milliseconds (ms), default 400
@@ -62,7 +61,6 @@
 
     function refresh(diatime,refreshid) {
         console.log('refresh ' + diatime);
-        savedDiatime = diatime;
         var diariesrow = function (row) {
             console.log(row);
             var temp=row.CREATEDTIME.split('-');
@@ -80,7 +78,7 @@
                     window.Diaries.data.get(t.ID).set("notes",t.NOTES);
                 }else{
                     console.log("add "+t.ID);
-                	window.Diaries.data.add({id: t.ID,title: t.TITLE,notes: t.NOTES,face_url: t.FACE_URL,diatime: t.DIATIME});    
+                	window.Diaries.data.add({id: t.ID,title: t.TITLE,notes: t.NOTES,face_url: t.FACE_URL,diatime: t.DIATIME,createdTime: t.CREATEDTIME});    
                 }
                 rowOutput += diariesrow(t);
             }
@@ -101,22 +99,21 @@
         var thisMonth = (today.getMonth() + 1).toString() + today.getFullYear().toString();
         db.transaction(function (tx) {
             console.log("initial data insertion");
-            addTodo(1, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
-            addTodo(2, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
-            addTodo(3, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
-            addTodo(4, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
-            addTodo(5, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
-            addTodo(6, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
-            addTodo(7, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
+            addTodo(100, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
+            addTodo(102, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
+            addTodo(103, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
+            addTodo(104, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
+            addTodo(105, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
+            addTodo(106, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
+            addTodo(107, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
             thisMonth = (today.getMonth() + 2).toString() + today.getFullYear().toString();
-            addTodo(8, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
-            addTodo(9, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
-            addTodo(10, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
-            addTodo(11, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
-            addTodo(12, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
-            addTodo(13, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
-            addTodo(14, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
-            // tx.executeSql("select * from diaries",[], function(tx,rs){console.log(isbno=rs.rows.length);},function(tx,e){console.log(e);});
+            addTodo(18, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
+            addTodo(19, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
+            addTodo(110, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
+            addTodo(111, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
+            addTodo(112, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
+            addTodo(113, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
+            addTodo(114, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
         });
     }
 
@@ -157,18 +154,6 @@
     function deleteTodo(id) {
         db.transaction(function (tx) {
             tx.executeSql("DELETE FROM diaries WHERE ID=?", [id], onSuccess, onError);
-        });
-    }
-
-    function queryDiaries(diatime, diadatasrouce) {
-        console.log('queryDiaries ' + diatime);
-        db.transaction(function (tx) {
-            tx.executeSql("select ID,TITLE,NOTES,FACE_URL FROM diaries WHERE DIATIME=?", [diatime], function (tx, rs) {
-                for (var i = 0; i < rs.rows.length; i++) {
-                    var t = rs.rows.item(i);
-                    diadatasrouce.add({id: t.ID,title: t.TITLE,notes: t.NOTES,face_url: t.FACE_URL,diatime: t.DIATIME});
-                }
-            }, onError);
         });
     }
 
@@ -343,19 +328,26 @@
             toPage("#todayDiary");
             // window.location.href = "#todayDiary";
         },
-        queryDiaries: function (diatime) {
-            this.data = new kendo.data.DataSource({
-                data: []
-            });
-            // call query diaries data sql with desired month and year
-            // put result into data with add
-            queryDiaries(diatime, this.data);
-        },
         updateDiary: function (id, title, notes, faceUrl, tdiatime) {
             console.log('updateDiary '+id+' notes '+notes);
             updateTodo(id, title, notes, faceUrl, tdiatime);
             app.navigate("#:back");
             refresh(savedDiatime,id);
+        },
+        toDiaries: function(){
+            var diariesTime=idel("diaryCTime").value;
+            var temp=diariesTime.split('-');
+            if (temp[1].indexOf("0")!=0){
+                diariesTime=temp[1]+temp[0];
+            }else{
+                diariesTime=temp[1].slice(1)+temp[0];
+            }
+            console.log(" toDiaries "+diariesTime);
+            this.data = new kendo.data.DataSource({
+                data: []
+            });
+            refresh(diariesTime,-1);
+            window.location.href = "#index";
         }
 
     };
@@ -423,8 +415,6 @@
     document.addEventListener("deviceready", function () {
         var month = today.getMonth();
         var year = today.getFullYear();
-        searchMonth = month;
-        searchYear = year;
         // $(idel("index")).attr("data-title", transferToEnglish(month) + ' ' + year);
         idel("indexHeaer").innerHTML = transferToEnglish(month) + ' ' + year;
         cameraApp = new cameraApp();
@@ -437,6 +427,15 @@
         createTable();
         // initData();
         refresh((month + 1).toString() + year.toString(),-1);
+        savedDiatime=(month + 1).toString() + year.toString();
+        if (month<=8){
+            month='0'+(month+1).toString();
+        }
+        var day=today.getDate().toString();
+        if (day<=9){
+            day='0'+day;
+        }
+        idel("diaryCTime").value=year.toString()+'-'+month+'-'+day;
     }, false);
     document.addEventListener("touchstart", function () {}, false);
 

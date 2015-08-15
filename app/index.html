@@ -88,6 +88,16 @@
             <ul id="DiariesData" class="km-widget km-listview km-list"></ul>
         </div>
     </div>
+    <div data-role="view" id="diaryCalendar" data-title="">
+        <div align="center">
+            <input id="diaryCTime" value="2014-02-09" name="diaryTime" type="date">
+        </div>
+        <div align="center">
+            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.toDiaries()">
+                Diary
+            </button>
+        </div>
+    </div>
     <div data-role="view" id="mood" data-show="Diaries.initMood">
         <div align="center">
             <h4 id="diaryToday" class="modal-title">Diary</h4>
@@ -150,6 +160,8 @@
             <li><a href="#index" data-icon="home">Diary</a>
             </li>
             <li><a href="#mood" data-icon="camera">Mood</a>
+            </li>
+            <li><a href="#diaryCalendar" data-icon="history">Calendar</a>
             </li>
         </ul>
     </div>
