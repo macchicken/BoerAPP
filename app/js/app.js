@@ -17,9 +17,6 @@
     var currLatitude, currLongitude, todayWeather, savedColour;
     var isbno=0, savedDiatime;
     var today = new Date();
-    var timer;
-    var istrue = false;
-    var delay = 1000; // how much long u have to hold click in MS
 
     function idel(element) {
         return document.getElementById(element);
@@ -31,12 +28,13 @@
 
     window.BoaerTools = {
         atagpress: function (element) {
-            console.log(" atagpress delete "+element.firstChild.value);
+            console.log(" atagpress delete ");
+            console.log(element);
             navigator.notification.confirm(
             'delete this diary?',  // message
             function(buttonIndex){// callback to invoke with index of button pressed
                         if (buttonIndex==1){
-                            var delid=element.firstChild.value*1;console.log('delid '+delid);
+                            var delid=element.nextElementSibling.value*1;console.log('delid '+delid);
                             deleteTodo(delid);
                         }
                     },                
@@ -68,7 +66,7 @@
         var diariesrow = function (row) {
             console.log(row);
             var temp=row.CREATEDTIME.split('-');
-            return "<li><table border='0'><tr><th><a href='views/details.html?id="+row.ID+"' class='km-listview-link' data-role='listview-link'>" + temp[0]+"/"+temp[1]+"/"+temp[2]+"&nbsp"+temp[3] + "H&nbsp&nbsp&nbsp"+transferDayToEnglish(temp[5]*1)+"</a></th><th><a class='km-listview-link' data-role='listview-link' onmousedown='BoaerTools.atagpress(this)'><input hidden type='text' value='"+row.ID+"'/><img src='" + row.FACE_URL + "' height='42' width='42'></a></th></tr><tr><td>" + row.TITLE + "</td></tr></table></li>";
+            return "<li><table border='0'><tr><th><a href='views/details.html?id="+row.ID+"' class='km-listview-link' data-role='listview-link'>" + temp[0]+"/"+temp[1]+"/"+temp[2]+"&nbsp"+temp[3] + "H&nbsp&nbsp&nbsp"+transferDayToEnglish(temp[5]*1)+"</a></th><th><img src='" + row.FACE_URL + "' height='42' width='42' onclick='BoaerTools.atagpress(this);'><input hidden type='text' value='"+row.ID+"'/></th></tr><tr><td>" + row.TITLE + "</td></tr></table></li>";
         }
 
         var render = function (tx, rs) {
