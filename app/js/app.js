@@ -348,6 +348,10 @@
             });
             refresh(diariesTime,-1);
             window.location.href = "#index";
+        },
+        appexit: function(){
+            console.log('exitApp');
+            navigator.app.exitApp();
         }
 
     };
@@ -438,7 +442,9 @@
         idel("diaryCTime").value=year.toString()+'-'+month+'-'+day;
     }, false);
     document.addEventListener("touchstart", function () {}, false);
-
+    document.addEventListener("backbutton",function(){},false);
 
     window.app = app;
+    
+    
 }());
