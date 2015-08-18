@@ -11,6 +11,7 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/uuid.js"></script>
     <script src="js/app.js"></script>
     <script src="js/details.js"></script>
     <script src="js/userControl.js"></script>
@@ -21,10 +22,67 @@
     .km-content {
         background-color: rgb(178, 178, 178)!important;
     }
-    .km-android input[type=password],input[type=text] {
+    .km-android input[type=password],input[type=text],input[type=email] {
         background-color: rgb(178, 178, 178)!important;
     }
     </style>
+    <div data-role="view" id="index" data-title="">
+        <div>
+            <h4 id="indexHeaer" class="modal-title">July 2015</h4>
+        </div>
+        <div class="km-listview-wrapper">
+            <ul id="DiariesData" class="km-widget km-listview km-list"></ul>
+        </div>
+    </div>
+    <div data-role="view" id="diaryCalendar" data-title="">
+        <div align="center">
+            <input id="diaryCTime" value="2014-02-09" name="diaryTime" type="date">
+        </div>
+        <div align="center">
+            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.toDiaries()">
+                Diary
+            </button>
+        </div>
+    </div>
+    <div data-role="view" id="mood" data-show="Diaries.initMood">
+        <div align="center">
+            <h4 id="diaryToday" class="modal-title">Diary</h4>
+        </div>
+        <div align="center">
+            <button type="button" class="btn btn-info btn-lg" id="capturePhotoButton">
+                Take your mood
+            </button>
+        </div>
+        <br/>
+        <div align="center">
+            <img style="display:block;margin:5px auto" id="moodImage" src="img/minions/pic-1.jpg" />
+        </div>
+        <br/>
+        <div align="center">
+            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.save()">
+                Quick Save
+            </button>
+        </div>
+        <br/>
+        <div align="center">
+            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.todayDiary()">Today Diary</button>
+        </div>
+    </div>
+    <div data-role="view" id="todayDiary" data-layout="back-layout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Diary</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="diaryNotes" rows=10 cols=30></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="Diaries.save()" class="btn btn-default">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div data-role="view" id="login" data-title="Login" data-model="loginView">
         <form>
             <ul data-role="listview" data-style="inset">
@@ -43,16 +101,11 @@
                 <li>
                     <button style="width: 100%" data-role="button" data-bind="click: submit">Login</button>
                     <button style="width: 100%" data-role="button" data-bind="click: toRegis">Create an account</button>
-                    <button style="width: 100%" data-role="button" data-bind="click: toAnonymous">Boer</button>
                 </li>
             </ul>
         </form>
     </div>
     <div data-role="view" id="register" data-title="Register" data-model="registerView">
-        <div data-role="navbar">
-            <a href="#login" data-align="left" data-role="button">Back</a>
-            <span data-role="view-title"></span>
-        </div>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -79,78 +132,6 @@
             </ul>
         </form>
     </div>
-    <div data-role="view" id="index" data-title="">
-        <div>
-            <h4 id="indexHeaer" class="modal-title">July 2015</h4>
-        </div>
-<!--         <ul data-role="listview" data-source="Diaries.data" data-pull-to-refresh="false" data-template="diaries-template"></ul> -->
-        <div class="km-listview-wrapper">
-            <ul id="DiariesData" class="km-widget km-listview km-list"></ul>
-        </div>
-    </div>
-    <div data-role="view" id="diaryCalendar" data-title="">
-        <div align="center">
-            <input id="diaryCTime" value="2014-02-09" name="diaryTime" type="date">
-        </div>
-        <div align="center">
-            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.toDiaries()">
-                Diary
-            </button>
-        </div>
-    </div>
-    <div data-role="view" id="mood" data-show="Diaries.initMood">
-        <div align="center">
-            <h4 id="diaryToday" class="modal-title">Diary</h4>
-        </div>
-        <div align="center">
-            <button type="button" class="btn btn-info btn-lg" id="capturePhotoButton">
-                Take your mood
-            </button>
-        </div>
-        <div align="center">
-            <img style="display:block;margin:5px auto" id="moodImage" src="img/minions/pic-1.jpg" />
-        </div>
-        <div align="center">
-            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.save()">
-                Quick Save
-            </button>
-        </div>
-        <div align="center">
-            <button type="button" class="btn btn-info btn-lg" onclick="Diaries.todayDiary()">Today Diary</button>
-        </div>
-    </div>
-    <div data-role="view" id="todayDiary" data-layout="back-layout">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Diary</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea id="diaryNotes" rows=10 cols=30></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="Diaries.save()" class="btn btn-default">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<!--     <script type="text/x-kendo-template" id="diaries-template">
-        <a href="views/details.html?##id=#: id #">
-        	<div class="bookImage"><img src="#: image_url #" />
-            </div>
-            <div class="photoTitle">#: name #</div>
-            <div class="photoAuthor">#: author #</div>
-        </a>
-    </script> -->
-    <div data-role="layout" data-id="main-layout">
-        <div data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="action"></a>
-                <a data-role="button" data-align="left" data-icon="reply" onclick="Diaries.appexit();"></a>
-            </div>
-        </div>
-    </div>
     <div data-role="drawer" id="app-drawer">
         <div data-role="header">
             <div data-role="navbar">
@@ -163,6 +144,10 @@
             <li><a href="#mood" data-icon="camera">Mood</a>
             </li>
             <li><a href="#diaryCalendar" data-icon="history">Calendar</a>
+            </li>
+            <li><a href="#login" data-icon="phone">Login</a>
+            </li>
+            <li><a data-role="button" data-icon="reply" onclick="Diaries.appexit();">Exit</a>
             </li>
         </ul>
     </div>

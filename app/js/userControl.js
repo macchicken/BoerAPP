@@ -29,15 +29,12 @@
                 navigator.notification.alert("Password is required.");
                 return;
             }
+            return;
             // call validate user api if success redirect to index
         },
         toRegis: function () {
-           	toPage("#register");
-            // window.location.href="#register";
-        },
-        toAnonymous: function () {
-            toPage("#index");
-            // window.location.href="#index";
+           	// toPage("#register");
+            window.location.href="#register";
         }
     });
     window.registerView = kendo.observable({
@@ -50,6 +47,7 @@
                 navigator.notification.alert("Password is required.");
                 return;
             }
+            return;
             // call user registration api if success redirect to index
         }
     });

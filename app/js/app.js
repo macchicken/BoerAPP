@@ -33,7 +33,7 @@
             'delete this diary?',  // message
             function(buttonIndex){// callback to invoke with index of button pressed
                         if (buttonIndex==1){
-                            var delid=element.nextElementSibling.value*1;console.log('delid '+delid);
+                            var delid=element.nextElementSibling.value;console.log('delid '+delid);
                             deleteTodo(delid);
                         }
                     },                
@@ -99,38 +99,28 @@
         var thisMonth = (today.getMonth() + 1).toString() + today.getFullYear().toString();
         db.transaction(function (tx) {
             console.log("initial data insertion");
-            addTodo(100, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
-            addTodo(102, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
-            addTodo(103, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
-            addTodo(104, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
-            addTodo(105, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
-            addTodo(106, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
-            addTodo(107, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
+            addTodo("100", "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
+            addTodo("102", "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
+            addTodo("103", "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
+            addTodo("104", "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
+            addTodo("105", "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
+            addTodo("106", "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
+            addTodo("107", "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
             thisMonth = (today.getMonth() + 2).toString() + today.getFullYear().toString();
-            addTodo(18, "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
-            addTodo(19, "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
-            addTodo(110, "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
-            addTodo(111, "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
-            addTodo(112, "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
-            addTodo(113, "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
-            addTodo(114, "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
+            addTodo("108", "JavaScript: The Good Parts", "Douglas Crockford", "img/minions/pic-1.jpg", thisMonth);
+            addTodo("109", "javaScript: The Definitive Guide", "David Flanagan", "img/minions/pic-2.jpg", thisMonth);
+            addTodo("110", "The Principles of Object-Oriented JavaScript", "Nicholas C. Zakas", "img/minions/pic-3.jpg", thisMonth);
+            addTodo("111", "Eloquent JavaScript: A Modern Introduction to Programming", "Marijn Haverbeke", "img/minions/pic-4.jpg", thisMonth);
+            addTodo("112", "Speaking JavaScript", "Axel Rauschmayer", "img/minions/pic-5.jpg", thisMonth);
+            addTodo("113", "jQuery UI in Action", "T.J. VanToll", "img/minions/pic-6.jpg", thisMonth);
+            addTodo("114", "JavaScript and JQuery: Interactive Front-End Web Development", "Joe Duckett", "img/minions/pic-3.jpg", thisMonth);
         });
     }
 
     function createTable() {
         db.transaction(function (tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS diaries(ID INTEGER PRIMARY KEY ASC,TITLE TEXT,NOTES TEXT,FACE_URL TEXT,DIATIME TEXT,CREATEDTIME TEXT,UPDATEDTIME TEXT)",[],function(tx,tr){},onError);
+            tx.executeSql("CREATE TABLE IF NOT EXISTS diaries(ID TEXT,TITLE TEXT,NOTES TEXT,FACE_URL TEXT,DIATIME TEXT,CREATEDTIME TEXT,UPDATEDTIME TEXT)",[],function(tx,tr){},onError);
             // tx.executeSql("drop table diaries");
-        });
-        db.transaction(function (tx) {
-            tx.executeSql("select max(ID) as maxId from diaries", [], function (tx, rs) {
-                if (rs.rows[0].maxId!=null){
-                    isbno = rs.rows[0].maxId;
-                }
-            }, function (tx, e) {
-                console.log("max id Error: " + e.message);
-                // alert("max id Error: " + e.message);
-            });
         });
     }
 
@@ -312,21 +302,21 @@
             //     image_url: moodImage.src,
             //     is_favorite: false
             // });
-            isbno = isbno + 1;
             var tdiatime = (today.getMonth() + 1).toString() + today.getFullYear().toString();
             var faceurl=moodImage.src;
             if (faceurl===""){
                 faceurl="img/minions/pic-1.jpg";
             }
-            addTodo(isbno, today.getDate() + ' ' + transferToEnglish(today.getMonth()) + ' ' + today.getFullYear() + " with " + todayWeather.description, idel("diaryNotes").value, faceurl, tdiatime);
+            addTodo(UUID.genV1().toString(), today.getDate() + ' ' + transferToEnglish(today.getMonth()) + ' ' + today.getFullYear() + " with " + todayWeather.description, idel("diaryNotes").value, faceurl, tdiatime);
             console.log("diary saved");
             idel("diaryNotes").value = '';
             moodImage.style.display = 'none';
-            app.navigate("#:back");
+            // app.navigate("#:back");
+            window.location.href = "#index";
         },
         todayDiary: function () {
-            toPage("#todayDiary");
-            // window.location.href = "#todayDiary";
+            // toPage("#todayDiary");
+            window.location.href = "#todayDiary";
         },
         updateDiary: function (id, title, notes, faceUrl, tdiatime) {
             console.log('updateDiary '+id+' notes '+notes);
@@ -424,9 +414,7 @@
         cameraApp = new cameraApp();
         cameraApp.run();
         navigator.splashscreen.hide();
-        app = new kendo.mobile.Application(document.body, {
-            layout: "main-layout"
-        });
+        app = new kendo.mobile.Application(document.body, {});
         openDb();
         createTable();
         // initData();
@@ -441,10 +429,11 @@
         }
         idel("diaryCTime").value=year.toString()+'-'+month+'-'+day;
     }, false);
-    document.addEventListener("touchstart", function () {}, false);
+    document.addEventListener("touchstart", function(){}, false);
     document.addEventListener("backbutton",function(){},false);
+    document.addEventListener("menubutton", function(){return false;}, false);
+
 
     window.app = app;
-    
     
 }());
