@@ -5,7 +5,20 @@
         var lasti = imgurl.lastIndexOf(".");
         var length = imgurl.length;
         return imgurl.substring(0, lasti - 2) + imgurl.substring(lasti, length);
-    }
+    };
+
+    var ShareViewModel = kendo.data.ObservableObject.extend({
+        shareMessageAndSubject: function () {
+            var message=document.getElementById("dianotes").value;
+            var faceurl=currentDiary.face_url;
+            window.plugins.socialsharing.share(message, 'The subject', faceurl, null,function(msg) {
+            console.log('SocialSharing success: ' + msg);
+        }, function(msg) {
+            alert('SocialSharing error: ' + msg);
+        });
+        }
+    });
+
     window.DiaryDetail = {
         show: function () {
             //Pull the id number from the query string
@@ -40,7 +53,12 @@
         },
         save: function(){
             window.Diaries.updateDiary(currentDiary.id,currentDiary.title,document.getElementById("dianotes").value,currentDiary.face_url,currentDiary.diatime);
-        }
-    };
+        },
+        share: function(){
+          (new ShareViewModel()).shareMessageAndSubject();
+      	}
+        
+    }; 
     
+
 }());

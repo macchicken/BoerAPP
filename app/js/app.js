@@ -405,6 +405,21 @@
         }
     };
 
+    var ShareViewModel = kendo.data.ObservableObject.extend({
+        shareMessageAndSubject: function () {
+            window.plugins.socialsharing.share('The message', 'The subject', null, null,function(msg) {
+            console.log('SocialSharing success: ' + msg);
+        }, function(msg) {
+            alert('SocialSharing error: ' + msg);
+        });
+        }
+    });
+    
+    window.ShareService={
+      share: function(){
+          (new ShareViewModel()).shareMessageAndSubject();
+      }
+    };
 
     document.addEventListener("deviceready", function () {
         var month = today.getMonth();
